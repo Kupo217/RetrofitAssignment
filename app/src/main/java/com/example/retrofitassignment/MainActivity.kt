@@ -1,5 +1,6 @@
 package com.example.retrofitassignment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import kotlin.reflect.typeOf
+
 const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
@@ -39,7 +42,9 @@ class MainActivity : AppCompatActivity() {
             }
             if (response.isSuccessful && response.body() != null)
             {
-                dataAdapter.data = response.body()!!
+                val data = response.body()!!
+                val users  = data.data
+                dataAdapter.data = users
             }else
             {
                 Log.e(TAG, "Failed")
@@ -48,8 +53,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() = binding.rvUsersList.apply {
-        dataAdapter = DataAdapter()
+        dataAdapter = DataAdapter(this@MainActivity)
         adapter = dataAdapter
         layoutManager = LinearLayoutManager(this@MainActivity)
     }
+
+
+
 }

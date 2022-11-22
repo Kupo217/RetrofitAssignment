@@ -1,7 +1,10 @@
 package com.example.retrofitassignment
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.retrofitassignment.databinding.ItemUserBinding
 
 
-class DataAdapter : RecyclerView.Adapter<DataAdapter.DataViewHolder>() {
+class DataAdapter(val context: Context) : RecyclerView.Adapter<DataAdapter.DataViewHolder>() {
 
     inner class DataViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -44,6 +47,14 @@ class DataAdapter : RecyclerView.Adapter<DataAdapter.DataViewHolder>() {
             tvEmail.text = data.email
             tvFirstName.text = data.first_name
             tvLastName.text = data.last_name
+            lnUserItem.setOnClickListener {
+                val intent = Intent(context, UserActivity::class.java)
+                intent.putExtra("id", data.id)
+                context.startActivity(intent)
+            }
         }
     }
+
+
+
 }
